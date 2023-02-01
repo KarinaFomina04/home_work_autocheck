@@ -1,0 +1,71 @@
+.friendMessage {
+    margin-top: 47px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.friendImageAndText {
+    flex-direction: row;
+    display: flex;
+    width: 80%;
+    height: 80%;
+    float: left;
+    align-items: flex-end;
+}
+
+.friendImageAndText img {
+    width: 48px;
+    height: 48px;
+    margin-right: 15px;
+}
+
+.friendText {
+    display: flex;
+    flex-direction: column;
+    background: #F5F7FB;
+    align-items: start;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.friendText:after {
+    content: '';
+    position: relative;
+    display: block;
+    width: 0;
+    height: 0;
+    border-bottom: 20px solid #F5F7FB;
+    border-right: 20px solid transparent;
+    border-left: 12px solid transparent;
+    top: 10px;
+    right: 20px;
+}
+
+.friendName {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.friendMessageText {
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, с 1999 года*/
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
+
+.friendTime {
+    margin-left: 5px;
+}
