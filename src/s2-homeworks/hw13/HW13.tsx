@@ -7,6 +7,9 @@ import success200 from './images/200.svg'
 import error400 from './images/400.svg'
 import error500 from './images/500.svg'
 import errorUnknown from './images/error.svg'
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import Error404 from "../hw05/pages/Error404";
 
 /*
 * 1 - дописать функцию send
@@ -36,13 +39,28 @@ const HW13 = () => {
             .then((res) => {
                 setCode('Код 200!')
                 setImage(success200)
-                // дописать
+                setInfo(res.data?.info)
+                setText(res.data.errorText)
 
             })
             .catch((e) => {
-                // дописать
+                setText(e.response?.data?.errorText || e.message )
+                setInfo(e.response?.data?.info || e.name)
+                if (e.response?.status === 500) {
+                    setCode('Ошибка 500!')
+                    setImage(error500);
+                } else if (e.response?.status === 400) {
+                    setCode("Ошибка 400!");
+                    setImage(error400)
+                } else {
+                    setCode("Error!");
+                    setImage(errorUnknown)
+                }
 
             })
+            // .finally(()=>{
+            //     setInfo('')
+            // })
     }
 
     return (
@@ -56,6 +74,7 @@ const HW13 = () => {
                         onClick={send(true)}
                         xType={'secondary'}
                         // дописать
+                       disabled={info === "...loading"}
 
                     >
                         Send true
@@ -65,6 +84,7 @@ const HW13 = () => {
                         onClick={send(false)}
                         xType={'secondary'}
                         // дописать
+                        disabled={info === "...loading"}
 
                     >
                         Send false
@@ -74,6 +94,7 @@ const HW13 = () => {
                         onClick={send(undefined)}
                         xType={'secondary'}
                         // дописать
+                        disabled={info === "...loading"}
 
                     >
                         Send undefined
@@ -83,7 +104,7 @@ const HW13 = () => {
                         onClick={send(null)} // имитация запроса на не корректный адрес
                         xType={'secondary'}
                         // дописать
-
+                        disabled={info === "...loading"}
                     >
                         Send null
                     </SuperButton>
