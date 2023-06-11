@@ -1,54 +1,67 @@
 import React from 'react'
+import SuperSelect from '../../../hw07/common/c5-SuperSelect/SuperSelect'
+import {Pagination} from '@mui/material'
+import s from './SuperPagination.module.css'
 
-// добавить в проект иконки и импортировать
-const downIcon = '[\\/]'
-const upIcon = '[/\\]'
-const noneIcon = '[--]'
-
-export type SuperSortPropsType = {
+export type SuperPaginationPropsType = {
     id?: string
-    sort: string
-    value: string
-    onChange: (newSort: string) => void
+    page: number
+    itemsCountForPage: number
+    totalCount: number
+    onChange: (page: number, count: number) => void
 }
 
-export const pureChange = (sort: string, down: string, up: string) => {
-    // пишет студент, sort: (click) => down (click) => up (click) => '' (click) => down ...
-    return sort === down ? up : sort === up ? '' : down
-}
-
-const SuperSort: React.FC<SuperSortPropsType> = (
+const SuperPagination: React.FC<SuperPaginationPropsType> = (
     {
-        sort, value, onChange, id = 'hw15',
+        page, itemsCountForPage, totalCount, onChange, id = 'hw15',
     }
 ) => {
-    const up = '0' + value
-    const down = '1' + value
+    const lastPage = Math.ceil(totalCount / itemsCountForPage) // пишет студент // вычислить количество страниц
 
-    const onChangeCallback = () => {
-        onChange(pureChange(sort, down, up))
+    const onChangeCallback = (event: any, page: number) => {
+        // пишет студент
+        onChange(page, itemsCountForPage)
     }
 
-    const icon = sort === down
-        ? downIcon
-        : sort === up
-            ? upIcon
-            : noneIcon
+    const onChangeSelect = (value: number) => {
+        // пишет студент
+        onChange(page, value)
+    }
 
     return (
-        <span
-            id={id + '-sort-' + value}
-            onClick={onChangeCallback}
-        >
-            {/*сделать иконку*/}
-            {/*<img*/}
-            {/*    id={id + '-icon-' + sort}*/}
-            {/*    src={icon}*/}
-            {/*/>*/}
+        <div className={s.pagination}>
+            <Pagination
+                id={id + '-pagination'}
+                sx={{
+                    // стили для Pagination // пишет студент
+                }}
+                page={page}
+                count={lastPage}
+                onChange={onChangeCallback}
+                hideNextButton
+                hidePrevButton
+            />
 
-            {icon} {/*а это убрать*/}
-        </span>
+            <span className={s.text1}>
+                показать
+            </span>
+
+            <SuperSelect
+                id={id + '-pagination-select'}
+                value={itemsCountForPage}
+                options={[
+                    {id: 4, value: 4},
+                    {id: 7, value: 7},
+                    {id: 10, value: 10},
+                ]}
+                onChangeOption={onChangeSelect}
+            />
+
+            <span className={s.text2}>
+                строк в таблице
+            </span>
+        </div>
     )
 }
 
-export default SuperSort
+export default SuperPagination
